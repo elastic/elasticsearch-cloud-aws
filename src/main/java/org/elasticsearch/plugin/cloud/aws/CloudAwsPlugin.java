@@ -19,10 +19,10 @@
 
 package org.elasticsearch.plugin.cloud.aws;
 
+import com.google.common.collect.Lists;
 import org.elasticsearch.cloud.aws.AwsEc2Service;
 import org.elasticsearch.cloud.aws.AwsModule;
 import org.elasticsearch.cloud.aws.AwsS3Service;
-import org.elasticsearch.common.collect.Lists;
 import org.elasticsearch.common.component.LifecycleComponent;
 import org.elasticsearch.common.inject.Module;
 import org.elasticsearch.common.settings.Settings;
