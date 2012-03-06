@@ -20,6 +20,8 @@
 package org.elasticsearch.cloud.aws.blobstore;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest;
+import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.elasticsearch.common.Nullable;
@@ -31,6 +33,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.unit.ByteSizeUnit;
 import org.elasticsearch.common.unit.ByteSizeValue;
 
+import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
 /**
@@ -95,21 +98,41 @@ public class S3BlobStore extends AbstractComponent implements BlobStore {
     @Override
     public void delete(BlobPath path) {
         ObjectListing prevListing = null;
+        //From http://docs.amazonwebservices.com/AmazonS3/latest/dev/DeletingMultipleObjectsUsingJava.html
+        //we can do at most 1K objects per delete
+        int objectCount = 0;
+        //We don't know the bucket name until first object listing
+        DeleteObjectsRequest multiObjectDeleteRequest = null;
+        ArrayList<KeyVersion> keys = new ArrayList<KeyVersion>();
         while (true) {
             ObjectListing list;
             if (prevListing != null) {
                 list = client.listNextBatchOfObjects(prevListing);
             } else {
                 list = client.listObjects(bucket, path.buildAsString("/") + "/");
+                multiObjectDeleteRequest = new DeleteObjectsRequest(list.getBucketName());
             }
             for (S3ObjectSummary summary : list.getObjectSummaries()) {
-                client.deleteObject(summary.getBucketName(), summary.getKey());
+                objectCount++;
+                keys.add(new KeyVersion(summary.getKey()));
+                //Every 500 objects batch the delete request
+                if (objectCount > 500) {
+                    multiObjectDeleteRequest.setKeys(keys);
+                    client.deleteObjects(multiObjectDeleteRequest);
+                    multiObjectDeleteRequest = new DeleteObjectsRequest(list.getBucketName());
+                    keys.clear();
+                    objectCount = 0;
+                }
             }
             if (list.isTruncated()) {
                 prevListing = list;
             } else {
                 break;
             }
+        }
+        if (objectCount > 0) {
+            multiObjectDeleteRequest.setKeys(keys);
+            client.deleteObjects(multiObjectDeleteRequest);
         }
     }
 
