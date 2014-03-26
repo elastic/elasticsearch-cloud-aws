@@ -5,8 +5,10 @@ The AWS Cloud plugin allows to use AWS EC2 API for the unicast discovery mechani
 
 In order to install the plugin, simply run: `bin/plugin -install elasticsearch/elasticsearch-cloud-aws/1.16.0`.
 
-* For 1.0.x elasticsearch versions, look at [master branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/master).
-* For 0.90.x elasticsearch versions, look at [1.x branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/1.x).
+* For master elasticsearch versions, look at [master branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/master).
+* For 1.1.x elasticsearch versions, look at [es-1.1 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.1).
+* For 1.0.x elasticsearch versions, look at [es-1.0 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.0).
+* For 0.90.x elasticsearch versions, look at [es-0.90 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-0.90).
 
 |      AWS Cloud Plugin      |    elasticsearch    | Release date |
 |----------------------------|---------------------|:------------:|
@@ -28,6 +30,26 @@ In order to install the plugin, simply run: `bin/plugin -install elasticsearch/e
 | 1.2.0                      | 0.18                |  2012-01-02  |
 | 1.1.0                      | 0.18                |  2012-01-02  |
 | 1.0.0                      | 0.18                |  2011-12-05  |
+
+Please read documentation relative to the version you are using:
+
+* [1.17.0-SNAPSHOT](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/es-0.90/README.md)
+* [1.16.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.16.0/README.md)
+* [1.15.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.15.0/README.md)
+* [1.14.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.14.0/README.md)
+* [1.12.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.12.0/README.md)
+* [1.11.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.11.0/README.md)
+* [1.10.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.10.0/README.md)
+* [1.9.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.9.0/README.md)
+* [1.8.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.8.0/README.md)
+* [1.7.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.7.0/README.md)
+* [1.6.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.6.0/README.md)
+* [1.5.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.5.0/README.md)
+* [1.4.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.4.0/README.md)
+* [1.3.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.3.0/README.md)
+* [1.2.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.2.0/README.md)
+* [1.1.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.1.0/README.md)
+* [1.0.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v1.0.0/README.md)
 
 ## Generic Configuration
 
