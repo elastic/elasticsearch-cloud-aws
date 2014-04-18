@@ -13,8 +13,8 @@ In order to install the plugin, simply run: `bin/plugin -install elasticsearch/e
 
 |      AWS Cloud Plugin      |    elasticsearch    | Release date |
 |----------------------------|---------------------|:------------:|
-| 2.1.1-SNAPSHOT             | 1.1.0 -> 1.1        |  XXXX-XX-XX  |
-| 2.1.0                      | 1.1.0 -> 1.1        |  2014-03-26  |
+| 2.1.1-SNAPSHOT             | 1.1.1 -> 1.1        |  XXXX-XX-XX  |
+| 2.1.0                      | 1.1.0               |  2014-03-26  |
 
 Please read documentation relative to the version you are using:
 
