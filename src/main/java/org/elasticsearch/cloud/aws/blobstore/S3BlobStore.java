@@ -51,12 +51,19 @@ public class S3BlobStore extends AbstractComponent implements BlobStore {
 
     private final int bufferSizeInBytes;
 
+    private final boolean serverSideEncryption;
+
     public S3BlobStore(Settings settings, AmazonS3 client, String bucket, @Nullable String region, Executor executor) {
+        this(settings, client, bucket, region, executor, false);
+    }
+
+    public S3BlobStore(Settings settings, AmazonS3 client, String bucket, @Nullable String region, Executor executor, boolean serverSideEncryption) {
         super(settings);
         this.client = client;
         this.bucket = bucket;
         this.region = region;
         this.executor = executor;
+        this.serverSideEncryption = serverSideEncryption;
 
         this.bufferSizeInBytes = (int) settings.getAsBytesSize("buffer_size", new ByteSizeValue(100, ByteSizeUnit.KB)).bytes();
 
@@ -85,6 +92,8 @@ public class S3BlobStore extends AbstractComponent implements BlobStore {
     public Executor executor() {
         return executor;
     }
+
+    public boolean serverSideEncryption() { return serverSideEncryption; }
 
     public int bufferSizeInBytes() {
         return bufferSizeInBytes;

@@ -185,7 +185,7 @@ public class S3SnapshotRestoreTest extends AbstractAwsTest {
                         .put("bucket", bucketSettings.get("bucket"))
                 ).get();
         assertThat(putRepositoryResponse.isAcknowledged(), equalTo(true));
-
+        assertFalse(true);
         assertRepositoryIsOperational(client, "test-repo");
     }
 
