@@ -7,21 +7,18 @@ for the unicast discovery mechanism and add S3 repositories.
 In order to install the plugin, simply run: `bin/plugin -install elasticsearch/elasticsearch-cloud-aws/2.1.1`.
 
 * For master elasticsearch versions, look at [master branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/master).
+* For 1.2.x elasticsearch versions, look at [es-1.2 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.2).
 * For 1.1.x elasticsearch versions, look at [es-1.1 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.1).
 * For 1.0.x elasticsearch versions, look at [es-1.0 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.0).
 * For 0.90.x elasticsearch versions, look at [es-0.90 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-0.90).
 
 |      AWS Cloud Plugin      |    elasticsearch    | Release date |
 |----------------------------|---------------------|:------------:|
-| 2.1.2-SNAPSHOT             | 1.1.1 -> 1.1        |  XXXX-XX-XX  |
-| 2.1.1                      | 1.1.1 -> 1.1        |  2014-04-18  |
-| 2.1.0                      | 1.1.0               |  2014-03-26  |
+| 2.2.0-SNAPSHOT             | 1.2.0 -> 1.2        |  XXXX-XX-XX  |
 
 Please read documentation relative to the version you are using:
 
-* [2.1.2-SNAPSHOT](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/es-1.1/README.md)
-* [2.1.1](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v2.1.1/README.md)
-* [2.1.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v2.1.0/README.md)
+* [2.2.0-SNAPSHOT](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/es-1.2/README.md)
 
 ## Generic Configuration
 
