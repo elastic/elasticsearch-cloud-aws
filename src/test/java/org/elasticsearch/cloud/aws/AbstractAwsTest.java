@@ -70,6 +70,9 @@ public abstract class AbstractAwsTest extends ElasticsearchIntegrationTest {
         return ImmutableSettings.builder()
                 .put(super.nodeSettings(nodeOrdinal))
                 .put("plugins." + PluginsService.LOAD_PLUGIN_FROM_CLASSPATH, true)
+                .put("cloud.aws.s3service.type", TestAwsS3Service.class)
+                .put("cloud.aws.random", randomInt())
+                .put("cloud.aws.write_failures", 0.1)
                 .build();
     }
 }
