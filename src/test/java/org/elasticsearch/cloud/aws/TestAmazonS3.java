@@ -63,8 +63,8 @@ public class TestAmazonS3 extends AmazonS3Wrapper {
 
     public TestAmazonS3(AmazonS3 delegate, Settings componentSettings) {
         super(delegate);
-        randomPrefix = componentSettings.get("random");
-        writeFailureRate = componentSettings.getAsDouble("write_failures", 0.0);
+        randomPrefix = componentSettings.get("test.random");
+        writeFailureRate = componentSettings.getAsDouble("test.write_failures", 0.0);
     }
 
     @Override

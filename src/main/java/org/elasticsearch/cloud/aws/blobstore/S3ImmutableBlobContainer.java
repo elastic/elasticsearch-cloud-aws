@@ -57,7 +57,7 @@ public class S3ImmutableBlobContainer extends AbstractS3BlobContainer implements
                         listener.onCompleted();
                         return;
                     } catch (AmazonS3Exception e) {
-                        if (e.getStatusCode() == 400 && retry < blobStore.numberOfRetries()) {
+                        if (shouldRetry(e) && retry < blobStore.numberOfRetries()) {
                             try {
                                 is.reset();
                             } catch (IOException ex) {
