@@ -20,6 +20,8 @@
 package org.elasticsearch.cloud.aws;
 
 import com.carrotsearch.randomizedtesting.annotations.TestGroup;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.test.ElasticsearchIntegrationTest;
 
 import java.lang.annotation.Documented;
@@ -62,4 +64,13 @@ public abstract class AbstractAwsTest extends ElasticsearchIntegrationTest {
      */
     public static final String SYSPROP_AWS = "tests.aws";
 
+    @Override
+    protected Settings nodeSettings(int nodeOrdinal) {
+        return ImmutableSettings.builder()
+                .put(super.nodeSettings(nodeOrdinal))
+                .put( AwsModule.S3_SERVICE_TYPE_KEY, TestAwsS3Service.class)
+                .put("cloud.aws.test.random", randomInt())
+                .put("cloud.aws.test.write_failures", 0.1)
+                .build();
+    }
 }
