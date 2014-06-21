@@ -19,10 +19,12 @@ you would be responsible building the plugin and providing the file/url yourself
 
 |      AWS Cloud Plugin      |    elasticsearch    | Release date |
 |----------------------------|---------------------|:------------:|
+| 2.2.1-SNAPSHOT             | 1.2.0 -> 1.2        |  XXXX-XX-XX  |
 | 2.2.0                      | 1.2.0 -> 1.2        |  2014-06-21  |
 
 Please read documentation relative to the version you are using:
 
+* [2.2.1-SNAPSHOT](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/es-1.2/README.md)
 * [2.2.0](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/v2.2.0/README.md)
 
 ## Generic Configuration
