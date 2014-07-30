@@ -32,8 +32,8 @@
     </parent>
 
     <properties>
-        <elasticsearch.version>1.3.0-SNAPSHOT</elasticsearch.version>
-        <lucene.version>4.8.1</lucene.version>
+        <elasticsearch.version>1.3.1</elasticsearch.version>
+        <lucene.version>4.9.0</lucene.version>
         <tests.output>onerror</tests.output>
         <tests.jvms>1</tests.jvms>
         <tests.shuffle>true</tests.shuffle>
@@ -227,6 +227,7 @@
                                 <tests.weekly>${tests.weekly}</tests.weekly>
                                 <tests.slow>${tests.slow}</tests.slow>
                                 <tests.aws>${tests.aws}</tests.aws>
+                                <tests.config>${tests.config}</tests.config>
                                 <tests.awaitsfix>${tests.awaitsfix}</tests.awaitsfix>
                                 <tests.slow>${tests.slow}</tests.slow>
                                 <tests.timeoutSuite>${tests.timeoutSuite}</tests.timeoutSuite>
