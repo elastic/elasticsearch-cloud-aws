@@ -4,27 +4,10 @@ AWS Cloud Plugin for Elasticsearch
 The Amazon Web Service (AWS) Cloud plugin allows to use [AWS API](https://github.com/aws/aws-sdk-java)
 for the unicast discovery mechanism and add S3 repositories.
 
-In order to install the plugin, run: `bin/plugin -install elasticsearch/elasticsearch-cloud-aws/2.1.1`.
+## Version 2.3.0-SNAPSHOT for Elasticsearch: 1.3
 
-where `2.1.1` would be the version applicable to your elasticsearch release, as follows:
-
-* For master elasticsearch versions, look at [master branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/master).
-* For 1.3.x elasticsearch versions, look at [es-1.3 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.3).
-* For 1.2.x elasticsearch versions, look at [es-1.2 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.2).
-* For 1.1.x elasticsearch versions, look at [es-1.1 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.1).
-* For 1.0.x elasticsearch versions, look at [es-1.0 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-1.0).
-* For 0.90.x elasticsearch versions, look at [es-0.90 branch](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/es-0.90).
-
-SNAPSHOT releases are still in development are _NOT_ available for automatic installation with `bin/plugin`. In such cases
-you would be responsible building the plugin and providing the file/url yourself.
-
-|      AWS Cloud Plugin      |    elasticsearch    | Release date |
-|----------------------------|---------------------|:------------:|
-| 2.3.0-SNAPSHOT             | 1.3.0 -> 1.3        |  XXXX-XX-XX  |
-
-Please read documentation relative to the version you are using:
-
-* [2.3.0-SNAPSHOT](https://github.com/elasticsearch/elasticsearch-cloud-aws/blob/es-1.3/README.md)
+If you are looking for another version documentation, please refer to the 
+[compatibility matrix](https://github.com/elasticsearch/elasticsearch-cloud-aws/#aws-cloud-plugin-for-elasticsearch).
 
 ## Generic Configuration
 
