@@ -32,7 +32,7 @@
     </parent>
 
     <properties>
-        <elasticsearch.version>1.4.0-SNAPSHOT</elasticsearch.version>
+        <elasticsearch.version>1.4.0.Beta1</elasticsearch.version>
         <lucene.version>4.10.1</lucene.version>
         <tests.output>onerror</tests.output>
         <tests.shuffle>true</tests.shuffle>
