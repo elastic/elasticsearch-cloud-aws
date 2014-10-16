@@ -34,9 +34,9 @@ import org.elasticsearch.cloud.aws.AwsS3Service;
 import org.elasticsearch.cluster.ClusterState;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.util.concurrent.UncategorizedExecutionException;
 import org.elasticsearch.plugins.PluginsService;
 import org.elasticsearch.repositories.RepositoryMissingException;
-import org.elasticsearch.repositories.RepositoryVerificationException;
 import org.elasticsearch.snapshots.SnapshotMissingException;
 import org.elasticsearch.snapshots.SnapshotState;
 import org.elasticsearch.test.ElasticsearchIntegrationTest.ClusterScope;
@@ -247,17 +247,20 @@ abstract public class AbstractS3SnapshotRestoreTest extends AbstractAwsTest {
      * This test verifies that the test configuration is set up in a manner that
      * does not make the test {@link #testRepositoryWithCustomCredentials()} pointless.
      */
-    @Test(expected = RepositoryVerificationException.class)
+    @Test(expected = UncategorizedExecutionException.class)
     public void assertRepositoryWithCustomCredentialsIsNotAccessibleByDefaultCredentials() {
         Client client = client();
         Settings bucketSettings = internalCluster().getInstance(Settings.class).getByPrefix("repositories.s3.private-bucket.");
         logger.info("-->  creating s3 repository with bucket[{}] and path [{}]", bucketSettings.get("bucket"), basePath);
-        client.admin().cluster().preparePutRepository("test-repo")
+        PutRepositoryResponse putRepositoryResponse = client.admin().cluster().preparePutRepository("test-repo")
                 .setType("s3").setSettings(ImmutableSettings.settingsBuilder()
                         .put("base_path", basePath)
                         .put("bucket", bucketSettings.get("bucket"))
                 ).get();
-        fail("repository verification should have raise an exception!");
+
+        assertThat(putRepositoryResponse.isAcknowledged(), equalTo(true));
+
+        assertRepositoryIsOperational(client, "test-repo");
     }
 
     @Test
@@ -282,12 +285,12 @@ abstract public class AbstractS3SnapshotRestoreTest extends AbstractAwsTest {
      * This test verifies that the test configuration is set up in a manner that
      * does not make the test {@link #testRepositoryInRemoteRegion()} pointless.
      */
-    @Test(expected = RepositoryVerificationException.class)
+    @Test(expected = UncategorizedExecutionException.class)
     public void assertRepositoryInRemoteRegionIsRemote() {
         Client client = client();
         Settings bucketSettings = internalCluster().getInstance(Settings.class).getByPrefix("repositories.s3.remote-bucket.");
         logger.info("-->  creating s3 repository with bucket[{}] and path [{}]", bucketSettings.get("bucket"), basePath);
-        client.admin().cluster().preparePutRepository("test-repo")
+        PutRepositoryResponse putRepositoryResponse = client.admin().cluster().preparePutRepository("test-repo")
                 .setType("s3").setSettings(ImmutableSettings.settingsBuilder()
                         .put("base_path", basePath)
                         .put("bucket", bucketSettings.get("bucket"))
@@ -295,7 +298,9 @@ abstract public class AbstractS3SnapshotRestoreTest extends AbstractAwsTest {
 //                        .put("region", privateBucketSettings.get("region"))
                 ).get();
 
-        fail("repository verification should have raise an exception!");
+        assertThat(putRepositoryResponse.isAcknowledged(), equalTo(true));
+
+        assertRepositoryIsOperational(client, "test-repo");
     }
 
     @Test
