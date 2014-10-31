@@ -32,8 +32,8 @@
     </parent>
 
     <properties>
-        <elasticsearch.version>1.4.0.Beta1</elasticsearch.version>
-        <lucene.version>4.10.1</lucene.version>
+        <elasticsearch.version>1.4.0-SNAPSHOT</elasticsearch.version>
+        <lucene.version>4.10.2</lucene.version>
         <amazonaws.version>1.7.13</amazonaws.version>
         <tests.output>onerror</tests.output>
         <tests.shuffle>true</tests.shuffle>
