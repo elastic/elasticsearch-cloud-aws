@@ -34,7 +34,7 @@
     <properties>
         <elasticsearch.version>1.5.0-SNAPSHOT</elasticsearch.version>
         <lucene.version>4.10.3</lucene.version>
-        <lucene.maven.version>4.10.3-snapshot-1637985</lucene.maven.version>
+        <lucene.maven.version>4.10.3</lucene.maven.version>
         <amazonaws.version>1.9.8</amazonaws.version>
         <tests.output>onerror</tests.output>
         <tests.shuffle>true</tests.shuffle>
