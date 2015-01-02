@@ -384,7 +384,23 @@ abstract public class AbstractS3SnapshotRestoreTest extends AbstractAwsTest {
         }
     }
 
-     private void assertRepositoryIsOperational(Client client, String repository) {
+    /**
+     * For feature request #124: https://github.com/elasticsearch/elasticsearch-cloud-aws/issues/124
+     */
+    @Test
+    public void testPathStyleAccess_124() {
+        Client client = client();
+        logger.info("-->  creating s3 repository with path style access");
+        PutRepositoryResponse putRepositoryResponse = client.admin().cluster().preparePutRepository("test-repo")
+                .setType("s3").setSettings(ImmutableSettings.settingsBuilder()
+                                .put("base_path", basePath)
+                                .put("path_style_access", true)
+                ).get();
+        assertThat(putRepositoryResponse.isAcknowledged(), equalTo(true));
+        assertRepositoryIsOperational(client, "test-repo");
+    }
+
+    private void assertRepositoryIsOperational(Client client, String repository) {
         createIndex("test-idx-1");
         ensureGreen();
 
