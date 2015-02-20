@@ -107,8 +107,10 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
         }
 
         String proxyHost = componentSettings.get("proxy_host");
+        proxyHost = componentSettings.get("s3.proxy_host", proxyHost);
         if (proxyHost != null) {
             String portString = componentSettings.get("proxy_port", "80");
+            portString = componentSettings.get("s3.proxy_port", portString);
             Integer proxyPort;
             try {
                 proxyPort = Integer.parseInt(portString, 10);

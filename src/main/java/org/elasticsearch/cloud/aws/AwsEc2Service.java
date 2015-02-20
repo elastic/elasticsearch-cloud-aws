@@ -73,8 +73,10 @@ public class AwsEc2Service extends AbstractLifecycleComponent<AwsEc2Service> {
         String key = componentSettings.get("secret_key", settings.get("cloud.key"));
 
         String proxyHost = componentSettings.get("proxy_host");
+        proxyHost = componentSettings.get("ec2.proxy_host",proxyHost);
         if (proxyHost != null) {
             String portString = componentSettings.get("proxy_port", "80");
+            portString = componentSettings.get("ec2.proxy_port",portString);
             Integer proxyPort;
             try {
                 proxyPort = Integer.parseInt(portString, 10);
