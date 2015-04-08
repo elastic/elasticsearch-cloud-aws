@@ -53,6 +53,12 @@
             <artifactId>elasticsearch</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupid>org.apache.httpcomponents</groupid>
+            <artifactId>httpcore</artifactId>
+            <version>4.3.3</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.apache.lucene</groupId>
