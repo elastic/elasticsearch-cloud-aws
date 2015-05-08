@@ -93,6 +93,9 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
         }
 
         ClientConfiguration clientConfiguration = new ClientConfiguration();
+        // the response metadata cache is only there for diagnostics purposes,
+        // but can force objects from every response to the old generation.
+        clientConfiguration.setResponseMetadataCacheSize(0);
         if (protocol == null) {
             protocol = componentSettings.get("protocol", "https").toLowerCase();
             protocol = componentSettings.get("s3.protocol", protocol).toLowerCase();
