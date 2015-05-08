@@ -32,9 +32,9 @@
     </parent>
 
     <properties>
-        <elasticsearch.version>1.4.5-SNAPSHOT</elasticsearch.version>
+        <elasticsearch.version>1.4.6-SNAPSHOT</elasticsearch.version>
         <lucene.version>4.10.4</lucene.version>
-        <amazonaws.version>1.9.23</amazonaws.version>
+        <amazonaws.version>1.9.34</amazonaws.version>
         <tests.output>onerror</tests.output>
         <tests.shuffle>true</tests.shuffle>
         <tests.output>onerror</tests.output>
