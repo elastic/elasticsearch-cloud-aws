@@ -4,7 +4,7 @@ AWS Cloud Plugin for Elasticsearch
 The Amazon Web Service (AWS) Cloud plugin allows to use [AWS API](https://github.com/aws/aws-sdk-java)
 for the unicast discovery mechanism and add S3 repositories.
 
-In order to install the plugin, run: 
+In order to install the plugin, run:
 
 ```sh
 bin/plugin install elasticsearch/elasticsearch-cloud-aws/2.7.0
@@ -15,7 +15,7 @@ You need to install a version matching your Elasticsearch version:
 |       Elasticsearch    |  AWS Cloud Plugin |                                                             Docs                                                                   |
 |------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------|
 |    master              | Build from source | See below                                                                                                                          |
-|    es-1.x              |     2.7.0         | [2.7.0](https://github.com/elastic/elasticsearch-cloud-aws/tree/v2.7.0/#version-270-for-elasticsearch-17)                  |
+|    es-1.7              |     2.7.0         | [2.7.0](https://github.com/elastic/elasticsearch-cloud-aws/tree/v2.7.0/#version-270-for-elasticsearch-17)                  |
 | es-1.6        |  2.6.0                | [2.6.0](https://github.com/elastic/elasticsearch-cloud-aws/tree/v2.6.0/#version-260-for-elasticsearch-16)  |
 |    es-1.5              |     2.5.1         | [2.5.1](https://github.com/elastic/elasticsearch-cloud-aws/tree/v2.5.1/#version-251-for-elasticsearch-15)                  |
 |    es-1.4              |     2.4.2         | [2.4.2](https://github.com/elasticsearch/elasticsearch-cloud-aws/tree/v2.4.2/#version-242-for-elasticsearch-14)                  |
@@ -29,16 +29,16 @@ To build a `SNAPSHOT` version, you need to build it with Maven:
 
 ```bash
 mvn clean install
-plugin --install cloud-aws \ 
+plugin --install cloud-aws \
        --url file:target/releases/elasticsearch-cloud-aws-X.X.X-SNAPSHOT.zip
 ```
 
 ## Generic Configuration
 
-The plugin will default to using [IAM Role](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) credentials 
-for authentication. These can be overridden by, in increasing order of precedence, system properties `aws.accessKeyId` and `aws.secretKey`, 
+The plugin will default to using [IAM Role](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html) credentials
+for authentication. These can be overridden by, in increasing order of precedence, system properties `aws.accessKeyId` and `aws.secretKey`,
 environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_KEY`, or the elasticsearch config using `cloud.aws.access_key` and `cloud.aws.secret_key`:
- 
+
 ```
 cloud:
     aws:
@@ -48,17 +48,17 @@ cloud:
 
 ### Transport security
 
-By default this plugin uses HTTPS for all API calls to AWS endpoints. If you wish to configure HTTP you can set 
-`cloud.aws.protocol` in the elasticsearch config. You can optionally override this setting per individual service 
-via: `cloud.aws.ec2.protocol` or `cloud.aws.s3.protocol`. 
+By default this plugin uses HTTPS for all API calls to AWS endpoints. If you wish to configure HTTP you can set
+`cloud.aws.protocol` in the elasticsearch config. You can optionally override this setting per individual service
+via: `cloud.aws.ec2.protocol` or `cloud.aws.s3.protocol`.
 
 ```
 cloud:
     aws:
         protocol: https
-        s3: 
+        s3:
             protocol: http
-        ec2: 
+        ec2:
             protocol: https
 ```
 
