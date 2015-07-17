@@ -112,7 +112,7 @@ public class DefaultS3OutputStream extends S3OutputStream {
                         is.reset();
                         retry++;
                     } else {
-                        throw new IOException("Unable to upload object " + getBlobName(), e);
+                        throw new IOException("Unable to upload object " + getBlobName() + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
                     }
                 }
             }
@@ -150,7 +150,7 @@ public class DefaultS3OutputStream extends S3OutputStream {
         }
     }
 
-    private void initializeMultipart() {
+    private void initializeMultipart() throws IOException {
         int retry = 0;
         while ((retry <= getNumberOfRetries()) && (multipartId == null)) {
             try {
@@ -163,7 +163,8 @@ public class DefaultS3OutputStream extends S3OutputStream {
                 if (getBlobStore().shouldRetry(e) && retry < getNumberOfRetries()) {
                     retry++;
                 } else {
-                    throw e;
+                    throw new IOException("Unable to initialize multipart request for object " + getBlobName()
+                            + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
                 }
             }
         }
@@ -194,7 +195,8 @@ public class DefaultS3OutputStream extends S3OutputStream {
                         retry++;
                     } else {
                         abortMultipart();
-                        throw e;
+                        throw new IOException("Unable to upload multipart request [" + multipartId + "] for object " + getBlobName()
+                                + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
                     }
                 }
             }
@@ -217,7 +219,7 @@ public class DefaultS3OutputStream extends S3OutputStream {
 
     }
 
-    private void completeMultipart() {
+    private void completeMultipart() throws IOException {
         int retry = 0;
         while (retry <= getNumberOfRetries()) {
             try {
@@ -229,7 +231,8 @@ public class DefaultS3OutputStream extends S3OutputStream {
                     retry++;
                 } else {
                     abortMultipart();
-                    throw e;
+                    throw new IOException("Unable to complete multipart request [" + multipartId + "] for object " + getBlobName()
+                            + " due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
                 }
             }
         }
