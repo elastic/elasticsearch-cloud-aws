@@ -32,7 +32,7 @@
     </parent>
 
     <properties>
-        <amazonaws.version>1.9.34</amazonaws.version>
+        <amazonaws.version>1.10.11</amazonaws.version>
         <tests.jvms>1</tests.jvms>
     </properties>
 
