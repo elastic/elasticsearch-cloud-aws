@@ -21,8 +21,17 @@ package org.elasticsearch.cloud.aws;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.SignerFactory;
+import com.amazonaws.services.s3.internal.S3Signer;
+
+import static com.amazonaws.auth.SignerFactory.registerSigner;
 
 public class AwsSigner {
+
+    private static final String VERSION_TWO_SIGNER = "AWS2SignerType";
+
+    static {
+        registerSigner(VERSION_TWO_SIGNER, S3Signer.class);
+    }
 
     private AwsSigner() {
 
