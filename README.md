@@ -109,6 +109,8 @@ If you are using a compatible EC2 or S3 service, they might be using an older AP
 You can set your compatible signer API using `cloud.aws.signer` (or `cloud.aws.ec2.signer` and `cloud.aws.s3.signer`)
 with the right signer to use. Defaults to `AWS4SignerType`.
 
+Use `AWS2SignerType` for google cloud store compatibility.
+
 
 ## EC2 Discovery
 

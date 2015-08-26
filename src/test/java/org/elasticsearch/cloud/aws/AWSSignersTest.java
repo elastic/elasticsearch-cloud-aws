@@ -31,6 +31,7 @@ public class AWSSignersTest extends ElasticsearchTestCase {
     public void testSigners() {
         assertThat(signerTester(null), is(false));
         assertThat(signerTester("QueryStringSignerType"), is(true));
+        assertThat(signerTester("AWS2SignerType"), is(true));
         assertThat(signerTester("AWS3SignerType"), is(true));
         assertThat(signerTester("AWS4SignerType"), is(true));
         assertThat(signerTester("NoOpSignerType"), is(true));
