@@ -1,3 +1,9 @@
+**IMPORTANT**: this project now moved to [elasticsearch repository](https://github.com/elastic/elasticsearch/tree/master/plugins/cloud-aws).
+
+Only important bug fixes will be merged here. If you have a question about the plugin, please use [discuss.elastic.co](https://discuss.elastic.co/c/elasticsearch). If you want to report a bug, please use [elasticsearch repository](https://github.com/elastic/elasticsearch/issues/new).
+
+---
+
 AWS Cloud Plugin for Elasticsearch
 ==================================
 
