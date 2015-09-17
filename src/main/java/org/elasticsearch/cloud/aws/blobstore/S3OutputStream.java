@@ -19,6 +19,7 @@
 
 package org.elasticsearch.cloud.aws.blobstore;
 
+import com.amazonaws.services.s3.model.StorageClass;
 import org.elasticsearch.common.unit.ByteSizeUnit;
 import org.elasticsearch.common.unit.ByteSizeValue;
 
@@ -41,6 +42,7 @@ public abstract class S3OutputStream extends OutputStream {
     private String blobName;
     private int numberOfRetries;
     private boolean serverSideEncryption;
+    private StorageClass storageClass;
 
     private byte[] buffer;
     private int count;
@@ -48,12 +50,13 @@ public abstract class S3OutputStream extends OutputStream {
 
     private int flushCount = 0;
 
-    public S3OutputStream(S3BlobStore blobStore, String bucketName, String blobName, int bufferSizeInBytes, int numberOfRetries, boolean serverSideEncryption) {
+    public S3OutputStream(S3BlobStore blobStore, String bucketName, String blobName, int bufferSizeInBytes, int numberOfRetries, boolean serverSideEncryption, StorageClass storageClass) {
         this.blobStore = blobStore;
         this.bucketName = bucketName;
         this.blobName = blobName;
         this.numberOfRetries = numberOfRetries;
         this.serverSideEncryption = serverSideEncryption;
+        this.storageClass = storageClass;
 
         if (bufferSizeInBytes < MULTIPART_MIN_SIZE.getBytes()) {
             throw new IllegalArgumentException("Buffer size can't be smaller than " + MULTIPART_MIN_SIZE);
@@ -121,5 +124,9 @@ public abstract class S3OutputStream extends OutputStream {
 
     public int getFlushCount() {
         return flushCount;
+    }
+
+    public StorageClass getStorageClass() {
+        return storageClass;
     }
 }

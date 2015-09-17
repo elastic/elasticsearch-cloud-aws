@@ -63,8 +63,8 @@ public class DefaultS3OutputStream extends S3OutputStream {
     private int multipartChunks;
     private List<PartETag> multiparts;
 
-    public DefaultS3OutputStream(S3BlobStore blobStore, String bucketName, String blobName, int bufferSizeInBytes, int numberOfRetries, boolean serverSideEncryption) {
-        super(blobStore, bucketName, blobName, bufferSizeInBytes, numberOfRetries, serverSideEncryption);
+    public DefaultS3OutputStream(S3BlobStore blobStore, String bucketName, String blobName, int bufferSizeInBytes, int numberOfRetries, boolean serverSideEncryption, StorageClass storageClass) {
+        super(blobStore, bucketName, blobName, bufferSizeInBytes, numberOfRetries, serverSideEncryption, storageClass);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class DefaultS3OutputStream extends S3OutputStream {
             int retry = 0;
             while (retry <= getNumberOfRetries()) {
                 try {
-                    doUpload(getBlobStore(), getBucketName(), getBlobName(), is, len, isServerSideEncryption());
+                    doUpload(getBlobStore(), getBucketName(), getBlobName(), is, len, isServerSideEncryption(), getStorageClass());
                     break;
                 } catch (AmazonClientException e) {
                     if (getBlobStore().shouldRetry(e) && retry < getNumberOfRetries()) {
@@ -121,7 +121,7 @@ public class DefaultS3OutputStream extends S3OutputStream {
     }
 
     protected void doUpload(S3BlobStore blobStore, String bucketName, String blobName, InputStream is, int length,
-                            boolean serverSideEncryption) throws AmazonS3Exception {
+                            boolean serverSideEncryption, StorageClass storageClass) throws AmazonS3Exception {
         ObjectMetadata md = new ObjectMetadata();
         if (serverSideEncryption) {
             md.setSSEAlgorithm(ObjectMetadata.AES_256_SERVER_SIDE_ENCRYPTION);
@@ -139,7 +139,9 @@ public class DefaultS3OutputStream extends S3OutputStream {
             // Every implementation of the Java platform is required to support MD5 (see MessageDigest)
             throw new RuntimeException(impossible);
         }
-        PutObjectResult putObjectResult = blobStore.client().putObject(bucketName, blobName, inputStream, md);
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, blobName, inputStream, md)
+                .withStorageClass(storageClass);
+        PutObjectResult putObjectResult = blobStore.client().putObject(putObjectRequest);
 
         String localMd5 = Base64.encodeAsString(messageDigest.digest());
         String remoteMd5 = putObjectResult.getContentMd5();
@@ -155,7 +157,7 @@ public class DefaultS3OutputStream extends S3OutputStream {
         int retry = 0;
         while ((retry <= getNumberOfRetries()) && (multipartId == null)) {
             try {
-                multipartId = doInitialize(getBlobStore(), getBucketName(), getBlobName(), isServerSideEncryption());
+                multipartId = doInitialize(getBlobStore(), getBucketName(), getBlobName(), isServerSideEncryption(), getStorageClass());
                 if (multipartId != null) {
                     multipartChunks = 1;
                     multiparts = new ArrayList<>();
@@ -172,8 +174,9 @@ public class DefaultS3OutputStream extends S3OutputStream {
         }
     }
 
-    protected String doInitialize(S3BlobStore blobStore, String bucketName, String blobName, boolean serverSideEncryption) {
-        InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucketName, blobName);
+    protected String doInitialize(S3BlobStore blobStore, String bucketName, String blobName, boolean serverSideEncryption, StorageClass storageClass) {
+        InitiateMultipartUploadRequest request = new InitiateMultipartUploadRequest(bucketName, blobName)
+                .withStorageClass(storageClass);
         if (serverSideEncryption) {
             ObjectMetadata md = new ObjectMetadata();
             md.setSSEAlgorithm(ObjectMetadata.AES_256_SERVER_SIDE_ENCRYPTION);

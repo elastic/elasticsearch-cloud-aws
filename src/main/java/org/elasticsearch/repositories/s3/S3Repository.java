@@ -19,6 +19,7 @@
 
 package org.elasticsearch.repositories.s3;
 
+import com.amazonaws.services.s3.model.StorageClass;
 import org.elasticsearch.cloud.aws.AwsS3Service;
 import org.elasticsearch.cloud.aws.blobstore.S3BlobStore;
 import org.elasticsearch.common.Strings;
@@ -118,11 +119,12 @@ public class S3Repository extends BlobStoreRepository {
         Integer maxRetries = repositorySettings.settings().getAsInt("max_retries", componentSettings.getAsInt("max_retries", 3));
         this.chunkSize = repositorySettings.settings().getAsBytesSize("chunk_size", componentSettings.getAsBytesSize("chunk_size", new ByteSizeValue(100, ByteSizeUnit.MB)));
         this.compress = repositorySettings.settings().getAsBoolean("compress", componentSettings.getAsBoolean("compress", false));
+        StorageClass storageClass = StorageClass.fromValue(repositorySettings.settings().get("storage_class", componentSettings.get("storage_class", StorageClass.Standard.toString())));
 
-        logger.debug("using bucket [{}], region [{}], endpoint [{}], protocol [{}], chunk_size [{}], server_side_encryption [{}], buffer_size [{}], max_retries [{}]",
-                bucket, region, endpoint, protocol, chunkSize, serverSideEncryption, bufferSize, maxRetries);
+        logger.debug("using bucket [{}], region [{}], endpoint [{}], protocol [{}], chunk_size [{}], server_side_encryption [{}], buffer_size [{}], max_retries [{}], storage_class [{}]",
+                bucket, region, endpoint, protocol, chunkSize, serverSideEncryption, bufferSize, maxRetries, storageClass.toString());
 
-        blobStore = new S3BlobStore(settings, s3Service.client(endpoint, protocol, region, repositorySettings.settings().get("access_key"), repositorySettings.settings().get("secret_key"), maxRetries), bucket, region, serverSideEncryption, bufferSize, maxRetries);
+        blobStore = new S3BlobStore(settings, s3Service.client(endpoint, protocol, region, repositorySettings.settings().get("access_key"), repositorySettings.settings().get("secret_key"), maxRetries), bucket, region, serverSideEncryption, bufferSize, maxRetries, storageClass);
         String basePath = repositorySettings.settings().get("base_path", null);
         if (Strings.hasLength(basePath)) {
             BlobPath path = new BlobPath();
