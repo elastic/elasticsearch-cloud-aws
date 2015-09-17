@@ -119,7 +119,7 @@ public class S3Repository extends BlobStoreRepository {
         Integer maxRetries = repositorySettings.settings().getAsInt("max_retries", componentSettings.getAsInt("max_retries", 3));
         this.chunkSize = repositorySettings.settings().getAsBytesSize("chunk_size", componentSettings.getAsBytesSize("chunk_size", new ByteSizeValue(100, ByteSizeUnit.MB)));
         this.compress = repositorySettings.settings().getAsBoolean("compress", componentSettings.getAsBoolean("compress", false));
-        StorageClass storageClass = StorageClass.fromValue(repositorySettings.settings().get("protocol", componentSettings.get("storage_class", StorageClass.Standard.toString())));
+        StorageClass storageClass = StorageClass.fromValue(repositorySettings.settings().get("storage_class", componentSettings.get("storage_class", StorageClass.Standard.toString())));
 
         logger.debug("using bucket [{}], region [{}], endpoint [{}], protocol [{}], chunk_size [{}], server_side_encryption [{}], buffer_size [{}], max_retries [{}], storage_class [{}]",
                 bucket, region, endpoint, protocol, chunkSize, serverSideEncryption, bufferSize, maxRetries, storageClass.toString());
