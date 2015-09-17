@@ -171,6 +171,7 @@ The following settings are supported:
 * `server_side_encryption`: When set to `true` files are encrypted on server side using AES256 algorithm. Defaults to `false`.
 * `buffer_size`: Minimum threshold below which the chunk is uploaded using a single request. Beyond this threshold, the S3 repository will use the [AWS Multipart Upload API](http://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html) to split the chunk into several parts, each of `buffer_size` length, and to upload each part in its own request. Note that positionning a buffer size lower than `5mb` is not allowed since it will prevents the use of the Multipart API and may result in upload errors. Defaults to `5mb`.
 * `max_retries`: Number of retries in case of S3 errors. Defaults to `3`.
+* `storage_class`: The S3 storage class to use. Can be `STANDARD`, `REDUCED_REDUNDANCY`, `GLACIER`, `STANDARD_IA`. Defaults to `STANDARD`.
 
 The S3 repositories are using the same credentials as the rest of the AWS services provided by this plugin (`discovery`).
 See [Generic Configuration](#generic-configuration) for details.
