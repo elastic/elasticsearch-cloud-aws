@@ -21,11 +21,8 @@ package org.elasticsearch.cloud.aws.blobstore;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.AmazonS3Exception;
-import com.amazonaws.services.s3.model.DeleteObjectsRequest;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.services.s3.model.DeleteObjectsRequest.KeyVersion;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.elasticsearch.common.Nullable;
 import org.elasticsearch.common.blobstore.BlobContainer;
 import org.elasticsearch.common.blobstore.BlobPath;
@@ -57,8 +54,10 @@ public class S3BlobStore extends AbstractComponent implements BlobStore {
 
     private final int numberOfRetries;
 
+    private final StorageClass storageClass;
+
     public S3BlobStore(Settings settings, AmazonS3 client, String bucket, @Nullable String region, boolean serverSideEncryption,
-                       ByteSizeValue bufferSize, int maxRetries) {
+                       ByteSizeValue bufferSize, int maxRetries, StorageClass storageClass) {
         super(settings);
         this.client = client;
         this.bucket = bucket;
@@ -71,6 +70,7 @@ public class S3BlobStore extends AbstractComponent implements BlobStore {
         }
 
         this.numberOfRetries = maxRetries;
+        this.storageClass = storageClass;
         if (!client.doesBucketExist(bucket)) {
             if (region != null) {
                 client.createBucket(bucket, region);
@@ -102,6 +102,8 @@ public class S3BlobStore extends AbstractComponent implements BlobStore {
     public int numberOfRetries() {
         return numberOfRetries;
     }
+
+    public StorageClass storageClass() { return storageClass; }
 
     @Override
     public BlobContainer blobContainer(BlobPath path) {

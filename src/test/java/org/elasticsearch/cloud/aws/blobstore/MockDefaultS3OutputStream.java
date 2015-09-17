@@ -21,6 +21,7 @@ package org.elasticsearch.cloud.aws.blobstore;
 
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.PartETag;
+import com.amazonaws.services.s3.model.StorageClass;
 import com.carrotsearch.randomizedtesting.RandomizedTest;
 import org.elasticsearch.common.io.Streams;
 
@@ -40,11 +41,11 @@ public class MockDefaultS3OutputStream extends DefaultS3OutputStream {
     private int numberOfUploadRequests = 0;
 
     public MockDefaultS3OutputStream(int bufferSizeInBytes) {
-        super(null, "test-bucket", "test-blobname", bufferSizeInBytes, 3, false);
+        super(null, "test-bucket", "test-blobname", bufferSizeInBytes, 3, false, StorageClass.Standard);
     }
 
     @Override
-    protected void doUpload(S3BlobStore blobStore, String bucketName, String blobName, InputStream is, int length, boolean serverSideEncryption) throws AmazonS3Exception {
+    protected void doUpload(S3BlobStore blobStore, String bucketName, String blobName, InputStream is, int length, boolean serverSideEncryption, StorageClass storageClass) throws AmazonS3Exception {
         try {
             long copied = Streams.copy(is, out);
             if (copied != length) {
@@ -57,7 +58,7 @@ public class MockDefaultS3OutputStream extends DefaultS3OutputStream {
     }
 
     @Override
-    protected String doInitialize(S3BlobStore blobStore, String bucketName, String blobName, boolean serverSideEncryption) {
+    protected String doInitialize(S3BlobStore blobStore, String bucketName, String blobName, boolean serverSideEncryption, StorageClass storageClass) {
         initialized = true;
         return RandomizedTest.randomAsciiOfLength(50);
     }
