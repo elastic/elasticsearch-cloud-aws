@@ -1,11 +1,11 @@
 **IMPORTANT**: this project now moved to elasticsearch repository (from elasticsearch 2.0.0): 
 
-* [cloud-aws](https://github.com/elastic/elasticsearch/tree/2.0/plugins/cloud-aws) [documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/current/cloud-aws.html)
+* [cloud-aws](https://github.com/elastic/elasticsearch/tree/2.0/plugins/cloud-aws) ([documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/current/cloud-aws.html))
 
 In elasticsearch master branch, the code has been split:
 
-* [repository-s3](https://github.com/elastic/elasticsearch/tree/master/plugins/repository-s3) [documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/master/repository-s3.html)
-* [discovery-ec2](https://github.com/elastic/elasticsearch/tree/master/plugins/discovery-ec2) [documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/master/discovery-ec2.html)
+* [repository-s3](https://github.com/elastic/elasticsearch/tree/master/plugins/repository-s3) ([documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/master/repository-s3.html))
+* [discovery-ec2](https://github.com/elastic/elasticsearch/tree/master/plugins/discovery-ec2) ([documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/master/discovery-ec2.html))
 
 Only important bug fixes will be merged here. If you have a question about the plugin, please use [discuss.elastic.co](https://discuss.elastic.co/c/elasticsearch). If you want to report a bug, please use [elasticsearch repository](https://github.com/elastic/elasticsearch/issues/new).
 
