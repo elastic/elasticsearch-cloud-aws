@@ -55,21 +55,8 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
     }
 
     @Override
-    public synchronized AmazonS3 client() {
-        String endpoint = getDefaultEndpoint();
-        String account = componentSettings.get("access_key", settings.get("cloud.account"));
-        String key = componentSettings.get("secret_key", settings.get("cloud.key"));
-
-        return getClient(endpoint, null, account, key, null);
-    }
-
-    @Override
-    public AmazonS3 client(String endpoint, String protocol, String region, String account, String key) {
-        return client(endpoint, protocol, region, account, key, null);
-    }
-
-    @Override
-    public synchronized AmazonS3 client(String endpoint, String protocol, String region, String account, String key, Integer maxRetries) {
+    public synchronized AmazonS3 client(String endpoint, String protocol, String region, String account, String key, Integer maxRetries,
+                                        boolean useThrottleRetries) {
         if (region != null && endpoint == null) {
             endpoint = getEndpoint(region);
             logger.debug("using s3 region [{}], with endpoint [{}]", region, endpoint);
@@ -81,11 +68,12 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
             key = componentSettings.get("secret_key", settings.get("cloud.key"));
         }
 
-        return getClient(endpoint, protocol, account, key, maxRetries);
+        return getClient(endpoint, protocol, account, key, maxRetries, useThrottleRetries);
     }
 
 
-    private synchronized AmazonS3 getClient(String endpoint, String protocol, String account, String key, Integer maxRetries) {
+    private synchronized AmazonS3 getClient(String endpoint, String protocol, String account, String key, Integer maxRetries,
+                                            boolean useThrottleRetries) {
         Tuple<String, String> clientDescriptor = new Tuple<String, String>(endpoint, account);
         AmazonS3Client client = clients.get(clientDescriptor);
         if (client != null) {
@@ -126,8 +114,8 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
         if (maxRetries != null) {
             // If not explicitly set, default to 3 with exponential backoff policy
             clientConfiguration.setMaxErrorRetry(maxRetries);
-            clientConfiguration.setUseThrottleRetries(settings.getAsBoolean("cloud.aws.s3.throttle_retries", true));
         }
+        clientConfiguration.setUseThrottleRetries(useThrottleRetries);
 
         // #155: we might have 3rd party users using older S3 API version
         String awsSigner = settings.get("cloud.aws.s3.signer", settings.get("cloud.aws.signer"));

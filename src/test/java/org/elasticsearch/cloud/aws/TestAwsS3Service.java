@@ -38,20 +38,10 @@ public class TestAwsS3Service extends InternalAwsS3Service {
         super(settings, settingsFilter);
     }
 
-
     @Override
-    public synchronized AmazonS3 client() {
-        return cachedWrapper(super.client());
-    }
-
-    @Override
-    public synchronized AmazonS3 client(String endpoint, String protocol, String region, String account, String key) {
-        return cachedWrapper(super.client(endpoint, protocol, region, account, key));
-    }
-
-    @Override
-    public synchronized AmazonS3 client(String endpoint, String protocol, String region, String account, String key, Integer maxRetries) {
-        return cachedWrapper(super.client(endpoint, protocol, region, account, key, maxRetries));
+    public synchronized AmazonS3 client(String endpoint, String protocol, String region, String account, String key, Integer maxRetries,
+                                        boolean useThrottleRetries) {
+        return cachedWrapper(super.client(endpoint, protocol, region, account, key, maxRetries, useThrottleRetries));
     }
 
     private AmazonS3 cachedWrapper(AmazonS3 client) {
