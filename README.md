@@ -6,8 +6,15 @@ From elasticsearch 2.0 you need to look at the following links:
 * [Documentation](https://www.elastic.co/guide/en/elasticsearch/plugins/current/index.html).
 * [Question? Bugs?](https://discuss.elastic.co/c/elasticsearch)
 
-For older versions, look at the following table:
+For older versions, look at the following documentation.
 
+In order to install the plugin, run:
+
+```sh
+bin/plugin install elasticsearch/elasticsearch-cloud-aws/VERSION
+```
+
+Where `VERSION` is the one you want to install.
 
 |       Elasticsearch    |  AWS Cloud Plugin |                                                             Docs                                                                   |
 |------------------------|-------------------|------------------------------------------------------------------------------------------------------------------------------------|
