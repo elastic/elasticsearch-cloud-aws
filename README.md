@@ -1,5 +1,7 @@
 **IMPORTANT: Project MOVED!**
 
+**If you are looking for a hosted solution of Elasticsearch on AWS, please visit http://www.elastic.co/cloud.**
+
 From elasticsearch 2.0 you need to look at the following links:
 
 * [Source code](https://github.com/elastic/elasticsearch/tree/master/plugins/).
