@@ -84,7 +84,7 @@ public class AwsEc2UnicastHostsProvider extends AbstractComponent implements Uni
 
         this.hostType = HostType.valueOf(componentSettings.get("host_type", "private_ip").toUpperCase());
 
-        this.discoNodes = new DiscoNodesCache(this.settings.getAsTime(DISCOVERY_EC2.NODE_CACHE_TIME,
+        this.discoNodes = new DiscoNodesCache(this.settings.getAsTime("discovery.ec2.node_cache_time",
                 TimeValue.timeValueMillis(10_000L)));
 
         this.bindAnyGroup = componentSettings.getAsBoolean("any_group", true);
