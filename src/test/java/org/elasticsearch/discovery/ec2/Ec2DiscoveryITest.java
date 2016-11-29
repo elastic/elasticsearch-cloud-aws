@@ -22,10 +22,12 @@ package org.elasticsearch.discovery.ec2;
 
 import org.elasticsearch.cloud.aws.AbstractAwsTest;
 import org.elasticsearch.cloud.aws.AbstractAwsTest.AwsTest;
+import org.elasticsearch.cloud.aws.AwsEc2Service;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.plugins.PluginsService;
 import org.elasticsearch.test.ElasticsearchIntegrationTest.ClusterScope;
 import org.elasticsearch.test.ElasticsearchIntegrationTest.Scope;
+import org.elasticsearch.transport.TransportService;
 import org.junit.Test;
 
 import static org.elasticsearch.common.settings.ImmutableSettings.settingsBuilder;

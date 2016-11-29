@@ -19,10 +19,13 @@
 
 package org.elasticsearch.cloud.aws;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonWebServiceRequest;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.auth.*;
 import com.amazonaws.internal.StaticCredentialsProvider;
+import com.amazonaws.retry.RetryPolicy;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import org.elasticsearch.ElasticsearchException;
@@ -36,12 +39,15 @@ import org.elasticsearch.common.network.NetworkService;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.SettingsFilter;
 
+import java.util.Random;
+
 /**
  *
  */
 public class AwsEc2Service extends AbstractLifecycleComponent<AwsEc2Service> {
 
     public static final String EC2_METADATA_URL = "http://169.254.169.254/latest/meta-data/";
+    public static final String NODE_CACHE_TIME = "discovery.ec2.node_cache_time";
 
     private AmazonEC2Client client;
 
@@ -99,6 +105,25 @@ public class AwsEc2Service extends AbstractLifecycleComponent<AwsEc2Service> {
                 logger.warn("wrong signer set for [cloud.aws.ec2.signer] or [cloud.aws.signer]: [{}]", awsSigner);
             }
         }
+
+        // Increase the number of retries in case of 5xx API responses
+        final Random rand = new Random();
+        RetryPolicy retryPolicy = new RetryPolicy(
+                RetryPolicy.RetryCondition.NO_RETRY_CONDITION,
+                new RetryPolicy.BackoffStrategy() {
+                    @Override
+                    public long delayBeforeNextRetry(AmazonWebServiceRequest originalRequest,
+                                                     AmazonClientException exception,
+                                                     int retriesAttempted) {
+                        // with 10 retries the max delay time is 320s/320000ms (10 * 2^5 * 1 * 1000)
+                        logger.warn("EC2 API request failed, retry again. Reason was:", exception);
+                        return 1000L * (long) (10d * Math.pow(2, ((double) retriesAttempted) / 2.0d) * (1.0d + rand.nextDouble()));
+                    }
+                },
+                10,
+                false);
+        clientConfiguration.setRetryPolicy(retryPolicy);
+
 
         AWSCredentialsProvider credentials;
 
