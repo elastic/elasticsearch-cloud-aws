@@ -33,15 +33,13 @@ import org.elasticsearch.common.component.AbstractComponent;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.common.util.SingleObjectCache;
 import org.elasticsearch.discovery.zen.ping.unicast.UnicastHostsProvider;
 import org.elasticsearch.discovery.zen.ping.unicast.UnicastZenPing;
 import org.elasticsearch.transport.TransportService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -71,6 +69,8 @@ public class AwsEc2UnicastHostsProvider extends AbstractComponent implements Uni
 
     private final HostType hostType;
 
+    private final DiscoNodesCache discoNodes;
+
     @Inject
     public AwsEc2UnicastHostsProvider(Settings settings, TransportService transportService, AmazonEC2 client, Version version) {
         super(settings);
@@ -79,6 +79,7 @@ public class AwsEc2UnicastHostsProvider extends AbstractComponent implements Uni
         this.version = version;
 
         this.hostType = HostType.valueOf(componentSettings.get("host_type", "private_ip").toUpperCase());
+        this.discoNodes = new DiscoNodesCache(this.settings.getAsTime("discovery.ec2.node_cache_time", TimeValue.timeValueMillis(10_000L)));
 
         this.bindAnyGroup = componentSettings.getAsBoolean("any_group", true);
         this.groups = ImmutableSet.copyOf(componentSettings.getAsArray("groups"));
@@ -98,6 +99,10 @@ public class AwsEc2UnicastHostsProvider extends AbstractComponent implements Uni
 
     @Override
     public List<DiscoveryNode> buildDynamicNodes() {
+        return discoNodes.getOrRefresh();
+    }
+
+    protected List<DiscoveryNode> fetchDynamicNodes() {
         List<DiscoveryNode> discoNodes = Lists.newArrayList();
 
         DescribeInstancesResult descInstances;
@@ -203,4 +208,26 @@ public class AwsEc2UnicastHostsProvider extends AbstractComponent implements Uni
 
         return describeInstancesRequest;
     }
+
+    private final class DiscoNodesCache extends SingleObjectCache<List<DiscoveryNode>> {
+
+        private boolean empty = true;
+
+        protected DiscoNodesCache(TimeValue refreshInterval) {
+            super(refreshInterval, Lists.<DiscoveryNode>newArrayList());
+        }
+
+        @Override
+        protected boolean needsRefresh() {
+            return (empty || super.needsRefresh());
+        }
+
+        @Override
+        protected List<DiscoveryNode> refresh() {
+            List<DiscoveryNode> nodes = fetchDynamicNodes();
+            empty = nodes.isEmpty();
+            return nodes;
+        }
+    }
+
 }
