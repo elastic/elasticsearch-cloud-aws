@@ -6,7 +6,7 @@
 
     <groupId>org.elasticsearch</groupId>
     <artifactId>elasticsearch-cloud-aws</artifactId>
-    <version>2.7.1-retry-fix</version>
+    <version>2.7.1-retry-fix-accelerated</version>
     <packaging>jar</packaging>
     <name>Elasticsearch AWS cloud plugin</name>
     <description>The Amazon Web Service (AWS) Cloud plugin allows to use AWS API for the unicast discovery mechanism and add S3 repositories.</description>
@@ -32,7 +32,7 @@
     </parent>
 
     <properties>
-        <amazonaws.version>1.10.12</amazonaws.version>
+        <amazonaws.version>1.11.108</amazonaws.version>
     </properties>
 
     <dependencies>
@@ -70,14 +70,28 @@
         <!-- AWS SDK -->
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-ec2</artifactId>
+            <artifactId>aws-java-sdk</artifactId>
             <version>${amazonaws.version}</version>
+        </dependency>
+        <!-- HTTP client -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.6.2</version>
         </dependency>
         <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>${amazonaws.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.6.6</version>
         </dependency>
+
 
         <!-- JODA Version available in elasticsearch 1.7 is buggy (2.7)-->
         <!-- we need to pull 2.8.2 -->

@@ -21,11 +21,17 @@ package org.elasticsearch.cloud.aws;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
-import com.amazonaws.auth.*;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSCredentialsProviderChain;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
+import com.amazonaws.auth.InstanceProfileCredentialsProvider;
+import com.amazonaws.auth.SystemPropertiesCredentialsProvider;
 import com.amazonaws.http.IdleConnectionReaper;
 import com.amazonaws.internal.StaticCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.S3ClientOptions;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.ElasticsearchIllegalArgumentException;
 import org.elasticsearch.common.collect.Tuple;
@@ -59,7 +65,6 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
         String endpoint = getDefaultEndpoint();
         String account = componentSettings.get("access_key", settings.get("cloud.account"));
         String key = componentSettings.get("secret_key", settings.get("cloud.key"));
-
         return getClient(endpoint, null, account, key, null);
     }
 
@@ -83,6 +88,7 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
 
         return getClient(endpoint, protocol, account, key, maxRetries);
     }
+
 
 
     private synchronized AmazonS3 getClient(String endpoint, String protocol, String account, String key, Integer maxRetries) {
@@ -153,10 +159,10 @@ public class InternalAwsS3Service extends AbstractLifecycleComponent<AwsS3Servic
             );
         }
         client = new AmazonS3Client(credentials, clientConfiguration);
-
         if (endpoint != null) {
             client.setEndpoint(endpoint);
         }
+
         clients.put(clientDescriptor, client);
         return client;
     }
