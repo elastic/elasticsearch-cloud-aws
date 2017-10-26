@@ -114,6 +114,7 @@ public class S3Repository extends BlobStoreRepository {
             }
         }
 
+        boolean pathStyleAccess = repositorySettings.settings().getAsBoolean("path_style_access", componentSettings.getAsBoolean("path_style_access", false));
         boolean serverSideEncryption = repositorySettings.settings().getAsBoolean("server_side_encryption", componentSettings.getAsBoolean("server_side_encryption", false));
         ByteSizeValue bufferSize = repositorySettings.settings().getAsBytesSize("buffer_size", componentSettings.getAsBytesSize("buffer_size", null));
         Integer maxRetries = repositorySettings.settings().getAsInt("max_retries", componentSettings.getAsInt("max_retries", 3));
@@ -126,7 +127,7 @@ public class S3Repository extends BlobStoreRepository {
                 bucket, region, endpoint, protocol, chunkSize, serverSideEncryption, bufferSize, maxRetries, useThrottleRetries);
 
         blobStore = new S3BlobStore(settings, s3Service.client(endpoint, protocol, region, repositorySettings.settings().get("access_key"),
-                repositorySettings.settings().get("secret_key"), maxRetries, useThrottleRetries), bucket, region, serverSideEncryption, bufferSize, maxRetries);
+                repositorySettings.settings().get("secret_key"), maxRetries, useThrottleRetries, true/*TODO*/), bucket, region, serverSideEncryption, bufferSize, maxRetries);
         String basePath = repositorySettings.settings().get("base_path", null);
         if (Strings.hasLength(basePath)) {
             BlobPath path = new BlobPath();

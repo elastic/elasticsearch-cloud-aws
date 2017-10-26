@@ -27,5 +27,5 @@ import org.elasticsearch.common.component.LifecycleComponent;
  */
 public interface AwsS3Service extends LifecycleComponent<AwsS3Service> {
     AmazonS3 client(String endpoint, String protocol, String region, String account, String key, Integer maxRetries,
-                    boolean useThrottleRetries);
+                    boolean useThrottleRetries, Boolean pathStyleAccess);
 }
