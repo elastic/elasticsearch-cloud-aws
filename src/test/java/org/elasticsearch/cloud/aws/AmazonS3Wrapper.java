@@ -46,7 +46,6 @@ public class AmazonS3Wrapper implements AmazonS3 {
         this.delegate = delegate;
     }
 
-
     @Override
     public void setEndpoint(String endpoint) {
         delegate.setEndpoint(endpoint);
@@ -670,5 +669,45 @@ public class AmazonS3Wrapper implements AmazonS3 {
 			GetBucketReplicationConfigurationRequest getBucketReplicationConfigurationRequest)
 					throws AmazonServiceException, AmazonClientException {
 		return delegate.getBucketReplicationConfiguration(getBucketReplicationConfigurationRequest);
+	}
+
+	@Override
+	public void setBucketAccelerateConfiguration(
+			SetBucketAccelerateConfigurationRequest setBucketAccelerateConfigurationRequest) {
+		delegate.setBucketAccelerateConfiguration(setBucketAccelerateConfigurationRequest);
+	}
+
+	@Override
+	public BucketAccelerateConfiguration getBucketAccelerateConfiguration(
+			GetBucketAccelerateConfigurationRequest getBucketAccelerateConfigurationRequest) {
+		return delegate.getBucketAccelerateConfiguration(getBucketAccelerateConfigurationRequest);
+	}
+
+	@Override
+	public BucketAccelerateConfiguration getBucketAccelerateConfiguration(String bucketName) {
+		return delegate.getBucketAccelerateConfiguration(bucketName);
+	}
+
+	@Override
+	public void setBucketAccelerateConfiguration(String bucketName,
+			BucketAccelerateConfiguration accelerateConfiguration) {
+		delegate.setBucketAccelerateConfiguration(bucketName, accelerateConfiguration);
+	}
+	
+	@Override
+	public ListObjectsV2Result listObjectsV2(String arg0) throws AmazonClientException, AmazonServiceException {
+		return delegate.listObjectsV2(arg0);
+	}
+
+	@Override
+	public ListObjectsV2Result listObjectsV2(ListObjectsV2Request arg0)
+			throws AmazonClientException, AmazonServiceException {
+		return delegate.listObjectsV2(arg0);
+	}
+
+	@Override
+	public ListObjectsV2Result listObjectsV2(String arg0, String arg1)
+			throws AmazonClientException, AmazonServiceException {
+		return delegate.listObjectsV2(arg0, arg1);
 	}
 }
