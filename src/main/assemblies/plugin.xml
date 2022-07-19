@@ -22,6 +22,9 @@
                 <include>com.amazonaws:aws-java-sdk</include>
                 <include>joda-time:joda-time</include>
                 <include>commons-codec:commons-codec</include>
+                <include>com.fasterxml.jackson.core:jackson-core</include>
+                <include>com.fasterxml.jackson.core:jackson-databind</include>
+                <include>com.fasterxml.jackson.core:jackson-annotations</include>
             </includes>
         </dependencySet>
     </dependencySets>
