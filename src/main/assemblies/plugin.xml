@@ -25,6 +25,7 @@
                 <include>com.fasterxml.jackson.core:jackson-core</include>
                 <include>com.fasterxml.jackson.core:jackson-databind</include>
                 <include>com.fasterxml.jackson.core:jackson-annotations</include>
+                <include>org.apache.httpcomponents:httpclient</include>
             </includes>
         </dependencySet>
     </dependencySets>
