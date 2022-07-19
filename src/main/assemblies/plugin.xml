@@ -26,6 +26,7 @@
                 <include>com.fasterxml.jackson.core:jackson-databind</include>
                 <include>com.fasterxml.jackson.core:jackson-annotations</include>
                 <include>org.apache.httpcomponents:httpclient</include>
+                <include>commons-logging:commons-logging</include>
             </includes>
         </dependencySet>
     </dependencySets>
